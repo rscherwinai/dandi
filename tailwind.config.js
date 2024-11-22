@@ -7,9 +7,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      gradients: {
+        'purple-amber': 'linear-gradient(to right, #9333ea, #a855f7, #fbbf24)',
       },
     },
   },
