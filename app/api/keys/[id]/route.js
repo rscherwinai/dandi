@@ -1,62 +1,15 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
-// Make sure we're using the correct imports
-import { headers } from 'next/headers';
-
-export async function PUT(request, context) {
+export async function DELETE(req, { params }) {
   try {
-    const id = context.params.id;  // Get ID from context
-    console.log('Attempting to update key:', id);
-
-    // Get the request body
-    const body = await request.json();
+    // Create a new URL object from the request URL
+    const url = new URL(req.url);
+    // Get the ID from the URL pathname
+    const pathParts = url.pathname.split('/');
+    const id = pathParts[pathParts.length - 1];
     
-    if (!id || !body.name) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
-
-    const { data, error } = await supabase
-      .from('api_keys')
-      .update({ name: body.name })
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Update failed:', error);
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json(data);
-
-  } catch (error) {
-    console.error('Error in PUT handler:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-}
-
-// Similar pattern for DELETE
-export async function DELETE(request, context) {
-  try {
-    const id = context.params.id;
     console.log('Attempting to delete key:', id);
-
-    if (!id) {
-      return NextResponse.json(
-        { error: 'Missing ID' },
-        { status: 400 }
-      );
-    }
 
     const { error } = await supabase
       .from('api_keys')
@@ -64,20 +17,62 @@ export async function DELETE(request, context) {
       .eq('id', id);
 
     if (error) {
-      console.error('Delete failed:', error);
       return NextResponse.json(
         { error: error.message },
-        { status: 500 }
+        { status: 400 }
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Key deleted successfully'
-    });
-
+    return NextResponse.json(
+      { message: 'Key deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error('Error in DELETE handler:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(req, { params }) {
+  try {
+    // Get the ID from params
+    const url = new URL(req.url);
+    const pathParts = url.pathname.split('/');
+    const id = pathParts[pathParts.length - 1];
+    
+    // Get the updated name from request body
+    const body = await req.json();
+    const { name } = body;
+
+    if (!name) {
+      return NextResponse.json(
+        { error: 'Name is required' },
+        { status: 400 }
+      );
+    }
+
+    // Update the key in Supabase
+    const { data, error } = await supabase
+      .from('api_keys')
+      .update({ name })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return NextResponse.json(
+        { error: error.message },
+        { status: 400 }
+      );
+    }
+
+    // Return the updated key data
+    return NextResponse.json(data, { status: 200 });
+  } catch (error) {
+    console.error('Error updating key:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

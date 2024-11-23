@@ -356,7 +356,7 @@ export default function ApiKeyDashboard() {
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <h3 className="text-lg font-semibold mb-4">Confirm Delete</h3>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete the API key "{deleteConfirmation.keyName}"? 
+            Are you sure you want to delete the API key &quot;{deleteConfirmation.keyName}&quot;? 
               This action cannot be undone.
             </p>
             <div className="flex justify-end gap-4">
