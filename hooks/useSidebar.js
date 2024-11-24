@@ -1,6 +1,6 @@
 'use client';
 
-import { create } from 'zustand';
+import { create } from 'zustand/vanilla';
 
 const useSidebar = create((set) => ({
   isCollapsed: false,

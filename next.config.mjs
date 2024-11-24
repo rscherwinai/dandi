@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ['punycode'],
-
   images: {
     domains: ['your-domain.com'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -16,14 +14,7 @@ const nextConfig = {
   },
 
   async redirects() {
-    return [
-      // Example redirect structure:
-      // {
-      //   source: '/old-path',        // URL to redirect from
-      //   destination: '/new-path',    // URL to redirect to
-      //   permanent: true,             // 308 (permanent) or 307 (temporary) redirect
-      // },
-    ];
+    return [];
   },
 
   async headers() {
@@ -48,16 +39,10 @@ const nextConfig = {
     ];
   },
 
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
       punycode: false,
-    };
-
-    config.optimization = {
-      ...config.optimization,
-      moduleIds: 'deterministic',
-      minimize: true,
     };
 
     return config;
