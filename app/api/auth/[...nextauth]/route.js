@@ -1,6 +1,10 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+if (!process.env.NEXTAUTH_SECRET) {
+  throw new Error("Please provide process.env.NEXTAUTH_SECRET");
+}
+
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -8,7 +12,7 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  debug: process.env.NODE_ENV === 'development',
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session, token }) {
       session.user.id = token.sub;
