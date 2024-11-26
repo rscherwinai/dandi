@@ -1,14 +1,13 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import Sidebar from '@/components/Sidebar';
-import SidebarToggle from '@/components/SidebarToggle';
-import { Toaster } from 'react-hot-toast';
+import Providers from '@/components/Providers';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -29,8 +28,9 @@ export default function RootLayout({ children }) {
         <title>Dandi AI</title>
       </head>
       <body className="antialiased">
-        {children}
-        <Toaster position="top-right" />
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

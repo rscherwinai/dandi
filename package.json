@@ -2,6 +2,7 @@
   "name": "dandi",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "NODE_NO_WARNINGS=1 next dev",
@@ -9,14 +10,23 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "resolutions": {
+    "langchain": "^0.3.0"
+  },
   "dependencies": {
+    "@langchain/community": "^0.3.15",
+    "@langchain/core": "^0.3.18",
+    "@langchain/openai": "^0.3.14",
     "@supabase/supabase-js": "^2.46.1",
+    "framer-motion": "^10.16.4",
+    "langchain": "^0.3.6",
+    "next": "14.2.18",
+    "next-auth": "^4.24.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "zustand": "^4.4.7",
-    "next": "14.2.18",
     "react-hot-toast": "^2.4.1",
-    "framer-motion": "^10.16.4"
+    "typescript": "^5.7.2",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "eslint": "^8",
